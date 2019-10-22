@@ -1,0 +1,18 @@
+{
+  "number": 123,
+  // Comment here
+  "string": "str",
+  "boolean": true,
+  "array": [1, 2, 3],
+  "object": {
+    "member": /* another here */ "hello"
+  },
+  "some": {
+    "deep": {
+      "object": {
+        "member": "hello",
+        "array": ["hello", "world"]
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+number = 123.0
+string = "str"
+boolean = true
+array = [
+  1,
+  2,
+  3
+]
+
+[object]
+member = "hello"
+
+[some.deep.object]
+member = "hello"
+array = [
+  "hello",
+  "world"
+]

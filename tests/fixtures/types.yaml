@@ -1,0 +1,19 @@
+number: 123
+string: "str"
+boolean: true
+array: 
+  - 1
+  - 2
+  - 3
+
+object:
+  member: "hello"
+  
+# Some comment here 
+some:
+  deep:
+    object:
+      member: "hello"
+      array: 
+        - "hello"
+        - "world"
