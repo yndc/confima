@@ -5,5 +5,16 @@
   "main": "dist/index.js",
   "repository": "https://github.com/yndc/confima.git",
   "author": "yondercode",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^3.6.4"
+  },
+  "dependencies": {
+    "@types/json-schema": "^7.0.3",
+    "@types/node": "^12.11.2",
+    "ajv": "^6.10.2",
+    "js-yaml": "^3.13.1",
+    "minimist": "^1.2.0",
+    "toml": "^3.0.0"
+  }
 }
