@@ -80,3 +80,33 @@ export function parseStringValue(str: string): any {
       .map(x => parseStringValue(x.trim()))
   return str
 }
+
+/**
+ * Recursively walks over an object
+ * @param obj
+ * @param handler
+ */
+export function walkObject(
+  obj: object,
+  handler: (
+    value: any,
+    key?: string,
+    parent?: object,
+    objectPath?: string
+  ) => void
+) {
+  const walk = (
+    o: object,
+    key?: string,
+    parent?: object,
+    objectPath?: string
+  ) => {
+    if (typeof o !== "object") handler(o, key, parent, objectPath)
+    else {
+      for (let k in o) {
+        walk(o[k], k, o, objectPath ? k : objectPath + "." + k)
+      }
+    }
+  }
+  walk(obj)
+}

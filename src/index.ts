@@ -16,7 +16,8 @@ import {
   deepMerge,
   setObjectValue,
   getExtension,
-  parseStringValue
+  parseStringValue,
+  walkObject
 } from "./utils"
 import { JSONSchema7 as JsonSchema } from "json-schema"
 
@@ -56,7 +57,7 @@ export default function<T extends object>() {
     /**
      * Adds a job to load configuration from the command arguments with the given argument prefix
      */
-    argument: function(prefix: string = "config.") {
+    argument: function(prefix: string = "config") {
       loadJobs.push(() => loadFromArguments(prefix))
       return this
     },
@@ -122,21 +123,11 @@ function loadFromFile(filePath: string, jsFileArgs?: any[]): object {
  * @param transformer
  */
 function loadFromArguments(prefix: string) {
-  let result: object = {}
-  const args = minimist(process.argv.slice(2))
-  const appVariables = Object.keys(args).reduce((r, name) => {
-    if (!name.startsWith(prefix) || name === "_") return r
-    const varName = name.replace(prefix, "")
-    return {
-      ...r,
-      [varName]: args[name]
-    }
-  }, {})
-  Object.keys(appVariables).forEach(key => {
-    let value = parseStringValue(appVariables[key])
-    setObjectValue(result, key, value)
+  const config = minimist(process.argv.slice(2))[prefix]
+  walkObject(config, (value, key, parent) => {
+    if (parent && key) parent[key] = parseStringValue(value)
   })
-  return result
+  return config
 }
 
 /**

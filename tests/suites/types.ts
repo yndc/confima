@@ -19,7 +19,7 @@ describe("load config from files", () => {
     }
   }
 
-  test("js extension", async () => {
+  test("js extension", () => {
     expect(
       confima()
         .file("tests/fixtures/types.js")
@@ -27,7 +27,7 @@ describe("load config from files", () => {
     ).toEqual(types)
   })
 
-  test("yaml extension", async () => {
+  test("yaml extension", () => {
     expect(
       confima()
         .file("tests/fixtures/types.yaml")
@@ -35,7 +35,7 @@ describe("load config from files", () => {
     ).toEqual(types)
   })
 
-  test("toml extension", async () => {
+  test("toml extension", () => {
     expect(
       confima()
         .file("tests/fixtures/types.toml")
@@ -43,7 +43,7 @@ describe("load config from files", () => {
     ).toEqual(types)
   })
 
-  test("json extension", async () => {
+  test("json extension", () => {
     expect(
       confima()
         .file("tests/fixtures/types.json")
@@ -51,7 +51,7 @@ describe("load config from files", () => {
     ).toEqual(types)
   })
 
-  test("jsonc extension", async () => {
+  test("jsonc extension", () => {
     expect(
       confima()
         .file("tests/fixtures/types.jsonc")
@@ -59,7 +59,7 @@ describe("load config from files", () => {
     ).toEqual(types)
   })
 
-  test("environment variables", async () => {
+  test("environment variables", () => {
     process.env["SOME_APP_VAR_number"] = "123"
     process.env["SOME_APP_VAR_string"] = "str"
     process.env["SOME_APP_VAR_boolean"] = "true"
@@ -70,6 +70,31 @@ describe("load config from files", () => {
     expect(
       confima()
         .environment("SOME_APP_VAR_")
+        .load()
+    ).toEqual(types)
+  })
+
+  test("command arguments", () => {
+    process.argv = [
+      "", "",
+      "--config.number",
+      "123",
+      "--config.string",
+      "str",
+      "--config.boolean",
+      "true",
+      "--config.array",
+      "{1, 2, 3}",
+      "--config.object.member",
+      "hello",
+      "--config.some.deep.object.member",
+      "hello",
+      "--config.some.deep.object.array",
+      "{hello, world}"
+    ]
+    expect(
+      confima()
+        .argument()
         .load()
     ).toEqual(types)
   })
