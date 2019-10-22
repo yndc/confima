@@ -4,18 +4,7 @@
  * @param to
  * @param from
  */
-export function deepMerge(
-  sources: object[],
-  target: object = {},
-  options?: {
-    /**
-     * Overwrite sources to target properties.
-     * If disabled, existing non-object properties will remain.
-     * @default true
-     */
-    overwrite?: boolean
-  }
-) {
+export function deepMerge(sources: object[], target: object = {}) {
   const merge = (from, to) => {
     for (var key in from) {
       if (typeof from[key] !== "object" || !from[key]) {
