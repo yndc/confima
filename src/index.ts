@@ -15,7 +15,7 @@ import argumentLoader from "./loaders/arguments"
 /**
  * Interface for the config builder
  */
-interface ConfigBuilder<T extends object> {
+export interface ConfigBuilder<T extends object> {
   setSchema: (schema: JsonSchema) => ConfigBuilder<T>
   fromObject: (object: object) => ConfigBuilder<T>
   fromFile: (
@@ -27,7 +27,17 @@ interface ConfigBuilder<T extends object> {
     options?: { watch: boolean }
   ) => ConfigBuilder<T>
   fromArgument: (prefix?: string) => ConfigBuilder<T>
-  get: () => T
+  build: () => ConfigWrapper<T>
+}
+
+/**
+ * Interface for the config object wrapper
+ */
+export interface ConfigWrapper<T extends object> {
+  /**`
+   * Retrieves the config values in plain object
+   */
+  value: () => T
 }
 
 /**
@@ -100,11 +110,15 @@ export default function<T extends object>(): ConfigBuilder<T> {
     /**
      * Retrieves the configuration as plain object
      */
-    get: function() {
+    build: function() {
       if (!state) {
         updateState(tempConfig)
       }
-      return state as T
+      if (state)
+        return {
+          value: () => state as T
+        }
+      else throw "Empty configuration"
     }
   }
 }

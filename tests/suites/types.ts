@@ -23,7 +23,8 @@ describe("load config from files", () => {
     expect(
       confima()
         .fromObject(types)
-        .get()
+        .build()
+        .value()
     ).toEqual(types)
   })
 
@@ -31,7 +32,8 @@ describe("load config from files", () => {
     expect(
       confima()
         .fromFile("tests/fixtures/types.js")
-        .get()
+        .build()
+        .value()
     ).toEqual(types)
   })
 
@@ -39,7 +41,8 @@ describe("load config from files", () => {
     expect(
       confima()
         .fromFile("tests/fixtures/types.yaml")
-        .get()
+        .build()
+        .value()
     ).toEqual(types)
   })
 
@@ -47,7 +50,8 @@ describe("load config from files", () => {
     expect(
       confima()
         .fromFile("tests/fixtures/types.toml")
-        .get()
+        .build()
+        .value()
     ).toEqual(types)
   })
 
@@ -55,7 +59,8 @@ describe("load config from files", () => {
     expect(
       confima()
         .fromFile("tests/fixtures/types.json")
-        .get()
+        .build()
+        .value()
     ).toEqual(types)
   })
 
@@ -63,8 +68,8 @@ describe("load config from files", () => {
     expect(
       confima()
         .fromFile("tests/fixtures/types.jsonc")
-
-        .get()
+        .build()
+        .value()
     ).toEqual(types)
   })
 
@@ -79,7 +84,8 @@ describe("load config from files", () => {
     expect(
       confima()
         .fromEnvironment("SOME_APP_VAR_")
-        .get()
+        .build()
+        .value()
     ).toEqual(types)
   })
 
@@ -105,7 +111,8 @@ describe("load config from files", () => {
     expect(
       confima()
         .fromArgument()
-        .get()
+        .build()
+        .value()
     ).toEqual(types)
   })
 })

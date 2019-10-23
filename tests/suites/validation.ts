@@ -40,7 +40,7 @@ describe("config validation", () => {
         .setSchema(schema)
         .fromFile("tests/fixtures/merges-first.yaml")
         .fromFile("tests/fixtures/merges-second.yaml")
-        .get
+        .build
     ).not.toThrow()
   })
 
@@ -49,7 +49,7 @@ describe("config validation", () => {
       confima()
         .setSchema(schema)
         .fromFile("tests/fixtures/merges-first.yaml")
-        .get
+        .build
     ).toThrow()
   })
 })
