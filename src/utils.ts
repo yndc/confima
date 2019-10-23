@@ -73,7 +73,10 @@ export function parseStringValue(str: string): any {
   if (str === "true") return true
   if (str === "false") return false
   if (!isNaN((str as unknown) as number)) return +((str as unknown) as number)
-  if (str.startsWith("{") && str.endsWith("}"))
+  if (
+    (str.startsWith("{") && str.endsWith("}")) ||
+    (str.startsWith("[") && str.endsWith("]"))
+  )
     return str
       .slice(1, -1)
       .split(",")

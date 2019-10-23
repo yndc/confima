@@ -1,0 +1,10 @@
+one:
+  two:
+    three:
+      b: "two"
+      c: 
+        second: true
+      array: 
+        - 3
+        - 4
+      d: 4

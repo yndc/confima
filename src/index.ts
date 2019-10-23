@@ -41,7 +41,14 @@ export default function<T extends object>() {
       return this
     },
     /**
-     * Adds a file to the configuration load order
+     * Adds a plain object to the configuration load queue
+     */
+    object: function(object: object) {
+      loadJobs.push(() => object)
+      return this
+    },
+    /**
+     * Adds a file to the configuration load queue
      */
     file: function(filePath: string, args?: any[]) {
       loadJobs.push(() => loadFromFile(filePath, args))

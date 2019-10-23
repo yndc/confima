@@ -19,7 +19,15 @@ describe("load config from files", () => {
     }
   }
 
-  test("js extension", () => {
+  test("plain object", () => {
+    expect(
+      confima()
+        .object(types)
+        .load()
+    ).toEqual(types)
+  })
+
+  test("js file", () => {
     expect(
       confima()
         .file("tests/fixtures/types.js")
@@ -27,7 +35,7 @@ describe("load config from files", () => {
     ).toEqual(types)
   })
 
-  test("yaml extension", () => {
+  test("yaml file", () => {
     expect(
       confima()
         .file("tests/fixtures/types.yaml")
@@ -35,7 +43,7 @@ describe("load config from files", () => {
     ).toEqual(types)
   })
 
-  test("toml extension", () => {
+  test("toml file", () => {
     expect(
       confima()
         .file("tests/fixtures/types.toml")
@@ -43,7 +51,7 @@ describe("load config from files", () => {
     ).toEqual(types)
   })
 
-  test("json extension", () => {
+  test("json file", () => {
     expect(
       confima()
         .file("tests/fixtures/types.json")
@@ -51,7 +59,7 @@ describe("load config from files", () => {
     ).toEqual(types)
   })
 
-  test("jsonc extension", () => {
+  test("jsonc file", () => {
     expect(
       confima()
         .file("tests/fixtures/types.jsonc")
@@ -76,7 +84,8 @@ describe("load config from files", () => {
 
   test("command arguments", () => {
     process.argv = [
-      "", "",
+      "",
+      "",
       "--config.number",
       "123",
       "--config.string",
