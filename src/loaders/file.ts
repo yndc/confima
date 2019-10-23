@@ -3,7 +3,7 @@ import * as fs from "fs"
 import * as yaml from "js-yaml"
 import * as jsonc from "jsonc-parser"
 import * as toml from "toml"
-import { getExtension } from "~/utils"
+import { getExtension } from "../utils"
 
 /**
  * Loads and parses configuration objest from file path

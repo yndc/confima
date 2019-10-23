@@ -1,5 +1,5 @@
 import * as minimist from "minimist"
-import { parseStringValue, walkObject } from "~/utils"
+import { parseStringValue, walkObject } from "../utils"
 
 /**
  * Loads and parses configuration from command arguments

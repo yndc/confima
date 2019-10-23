@@ -6,15 +6,19 @@
   "repository": "https://github.com/yndc/confima.git",
   "author": "yondercode",
   "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest"
+  },
   "devDependencies": {
+    "@types/jest": "^24.0.19",
+    "@types/json-schema": "^7.0.3",
+    "@types/node": "^12.11.2",
     "jest": "^24.9.0",
     "ts-jest": "^24.1.0",
     "typescript": "^3.6.4"
   },
   "dependencies": {
-    "@types/jest": "^24.0.19",
-    "@types/json-schema": "^7.0.3",
-    "@types/node": "^12.11.2",
     "ajv": "^6.10.2",
     "js-yaml": "^3.13.1",
     "jsonc-parser": "^2.1.1",

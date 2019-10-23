@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "baseUrl": ".",
+    "baseUrl": "src",
     "resolveJsonModule": true,
     "lib": ["es2016", "dom"],
     "rootDirs": ["src"],
@@ -10,14 +10,20 @@
     "declaration": true,
     "declarationDir": "dist",
     "target": "es2016",
-    "removeComments": true,
     "noImplicitReturns": true,
     "strictNullChecks": true,
     "stripInternal": true,
     "noFallthroughCasesInSwitch": true,
     "outDir": "dist",
     "paths": {
-      "~/*": ["src/*"]
-    }
-  }
+      "~/*": ["./*"]
+    },
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }

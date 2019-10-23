@@ -1,4 +1,4 @@
-import { parseStringValue, setObjectValue } from "~/utils"
+import { parseStringValue, setObjectValue } from "../utils"
 
 /**
  * Loads and parses configuration from environment variables
