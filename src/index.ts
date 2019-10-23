@@ -17,8 +17,18 @@ import argumentLoader from "./loaders/arguments"
  * @param configFilePath
  */
 export default function<T extends object>() {
-  let schema: JsonSchema | undefined = undefined
-  let loadJobs: (() => object)[] = []
+  let tempConfig: object[] = []
+  let state: T | undefined = undefined
+  let validator: ajv.ValidateFunction | undefined = undefined
+  let onError = (e: ajv.ErrorObject[]) => console.error(e)
+  function updateState(changes: object[]) {
+    const newState = deepMerge(changes, state ? state : {})
+    if (validator && validator(newState) === false) {
+      if (state) {
+        if (validator.errors) onError(validator.errors)
+      } else throw validator.errors
+    } else state = newState
+  }
 
   return {
     /**
@@ -27,50 +37,56 @@ export default function<T extends object>() {
      * If this is set, then the final configuration will be validated against this schema.
      * On failure, exception will be thrown with the errors
      */
-    schema: function(newSchema: JsonSchema) {
-      schema = newSchema
+    setSchema: function(schema: JsonSchema) {
+      validator = new ajv().compile(schema)
       return this
     },
     /**
      * Adds a plain object to the configuration load queue
      */
-    object: function(object: object) {
-      loadJobs.push(() => object)
+    fromObject: function(object: object) {
+      tempConfig.push(object)
       return this
     },
     /**
      * Adds a file to the configuration load queue
      */
-    file: function(filePath: string, args?: any[]) {
-      loadJobs.push(() => fileLoader(filePath, args))
+    fromFile: function(
+      filePath: string,
+      options: { watch?: boolean; args?: any[] } = { watch: false }
+    ) {
+      const { watch, args } = options
+      tempConfig.push(
+        fileLoader(filePath, args, watch ? o => updateState(o) : undefined)
+      )
       return this
     },
     /**
      * Adds a job to load configuration from the environment variables with the given variable prefix
      */
-    environment: function(prefix: string = "APP_") {
-      loadJobs.push(() => environmentLoader(prefix))
+    fromEnvironment: function(
+      prefix: string = "APP_",
+      options: { watch: boolean } = { watch: false }
+    ) {
+      const { watch = false } = options
+      tempConfig.push(environmentLoader(prefix))
       return this
     },
     /**
      * Adds a job to load configuration from the command arguments with the given argument prefix
      */
-    argument: function(prefix: string = "config") {
-      loadJobs.push(() => argumentLoader(prefix))
+    fromArgument: function(prefix: string = "config") {
+      tempConfig.push(argumentLoader(prefix))
       return this
     },
     /**
-     * Loads the configuration
+     * Retrieves the configuration as plain object
      */
-    load: function() {
-      const result = deepMerge(loadJobs.map(job => job()), {})
-      if (schema) {
-        const validator = new ajv()
-        if (!validator.validate(schema, result)) {
-          throw validator.errors
-        }
+    get: function() {
+      if (!state) {
+        updateState(tempConfig)
       }
-      return result as T
+      return state
     }
   }
 }

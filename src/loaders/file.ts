@@ -9,7 +9,11 @@ import { getExtension } from "~/utils"
  * Loads and parses configuration objest from file path
  * @param filePath
  */
-export default function(filePath: string, jsFileArgs?: any[]): object {
+export default function(
+  filePath: string,
+  jsFileArgs?: any[],
+  onChange?: (object) => void
+): object {
   let resolvedPath = path.resolve(filePath)
   let extension = getExtension(filePath)
 
@@ -26,22 +30,31 @@ export default function(filePath: string, jsFileArgs?: any[]): object {
     throw `File does not exists: ${filePath}`
 
   // Parse and return the file based on its extension
-  switch (extension) {
-    case "json":
-      return JSON.parse(fs.readFileSync(resolvedPath).toString())
-    case "jsonc":
-      return jsonc.parse(fs.readFileSync(resolvedPath).toString())
-    case "js": {
-      const cfg = require(resolvedPath)
-      if (typeof cfg === "function")
-        return cfg(...(jsFileArgs ? jsFileArgs : []))
-      return cfg
+  const load = (() => {
+    switch (extension) {
+      case "json":
+        return () => JSON.parse(fs.readFileSync(resolvedPath).toString())
+      case "jsonc":
+        return () => jsonc.parse(fs.readFileSync(resolvedPath).toString())
+      case "js":
+        return () => {
+          const cfg = require(resolvedPath)
+          if (typeof cfg === "function")
+            return cfg(...(jsFileArgs ? jsFileArgs : []))
+          return cfg
+        }
+      case "toml":
+        return () => toml.parse(fs.readFileSync(resolvedPath).toString())
+      case "yaml":
+        return () => yaml.safeLoad(fs.readFileSync(resolvedPath).toString())
+      default:
+        throw `Unknown extension ${extension} from ${filePath}`
     }
-    case "toml":
-      return toml.parse(fs.readFileSync(resolvedPath).toString())
-    case "yaml":
-      return yaml.safeLoad(fs.readFileSync(resolvedPath).toString())
-    default:
-      throw `Unknown extension ${extension} from ${filePath}`
-  }
+  })()
+  if (onChange !== undefined)
+    fs.watchFile(resolvedPath, () => {
+      console.log("CHANGED")
+      onChange(load())
+    })
+  return load()
 }

@@ -37,19 +37,19 @@ describe("config validation", () => {
   test("not throw on correct values", () => {
     expect(
       confima()
-        .schema(schema)
-        .file("tests/fixtures/merges-first.yaml")
-        .file("tests/fixtures/merges-second.yaml")
-        .load
+        .setSchema(schema)
+        .fromFile("tests/fixtures/merges-first.yaml")
+        .fromFile("tests/fixtures/merges-second.yaml")
+        .get
     ).not.toThrow()
   })
 
   test("throw on incorrect values", () => {
     expect(
       confima()
-        .schema(schema)
-        .file("tests/fixtures/merges-first.yaml")
-        .load
+        .setSchema(schema)
+        .fromFile("tests/fixtures/merges-first.yaml")
+        .get
     ).toThrow()
   })
 })

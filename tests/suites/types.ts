@@ -22,48 +22,48 @@ describe("load config from files", () => {
   test("plain object", () => {
     expect(
       confima()
-        .object(types)
-        .load()
+        .fromObject(types)
+        .get()
     ).toEqual(types)
   })
 
   test("js file", () => {
     expect(
       confima()
-        .file("tests/fixtures/types.js")
-        .load()
+        .fromFile("tests/fixtures/types.js")
+        .get()
     ).toEqual(types)
   })
 
   test("yaml file", () => {
     expect(
       confima()
-        .file("tests/fixtures/types.yaml")
-        .load()
+        .fromFile("tests/fixtures/types.yaml")
+        .get()
     ).toEqual(types)
   })
 
   test("toml file", () => {
     expect(
       confima()
-        .file("tests/fixtures/types.toml")
-        .load()
+        .fromFile("tests/fixtures/types.toml")
+        .get()
     ).toEqual(types)
   })
 
   test("json file", () => {
     expect(
       confima()
-        .file("tests/fixtures/types.json")
-        .load()
+        .fromFile("tests/fixtures/types.json")
+        .get()
     ).toEqual(types)
   })
 
   test("jsonc file", () => {
     expect(
       confima()
-        .file("tests/fixtures/types.jsonc")
-        .load()
+        .fromFile("tests/fixtures/types.jsonc")
+        .get()
     ).toEqual(types)
   })
 
@@ -77,8 +77,8 @@ describe("load config from files", () => {
     process.env["SOME_APP_VAR_some__deep__object__array"] = "{hello, world}"
     expect(
       confima()
-        .environment("SOME_APP_VAR_")
-        .load()
+        .fromEnvironment("SOME_APP_VAR_")
+        .get()
     ).toEqual(types)
   })
 
@@ -103,8 +103,8 @@ describe("load config from files", () => {
     ]
     expect(
       confima()
-        .argument()
-        .load()
+        .fromArgument()
+        .get()
     ).toEqual(types)
   })
 })

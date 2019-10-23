@@ -21,9 +21,9 @@ describe("config merges", () => {
   test("deep merge", () => {
     expect(
       confima()
-        .file("tests/fixtures/merges-first.yaml")
-        .file("tests/fixtures/merges-second.yaml")
-        .load()
+        .fromFile("tests/fixtures/merges-first.yaml")
+        .fromFile("tests/fixtures/merges-second.yaml")
+        .get()
     ).toEqual(merges)
   })
 })
