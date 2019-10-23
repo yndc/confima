@@ -1,4 +1,4 @@
-import confima from "~/index"
+import confima from "../../src/index"
 
 describe("load config from files", () => {
   const types = {
@@ -63,6 +63,7 @@ describe("load config from files", () => {
     expect(
       confima()
         .fromFile("tests/fixtures/types.jsonc")
+
         .get()
     ).toEqual(types)
   })

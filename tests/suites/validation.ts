@@ -1,4 +1,4 @@
-import confima from "~/index"
+import confima from "../../src/index"
 import { JSONSchema7 as JsonSchema } from "json-schema"
 
 describe("config validation", () => {

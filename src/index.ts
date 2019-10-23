@@ -13,10 +13,28 @@ import environmentLoader from "./loaders/environment"
 import argumentLoader from "./loaders/arguments"
 
 /**
+ * Interface for the config builder
+ */
+interface ConfigBuilder<T extends object> {
+  setSchema: (schema: JsonSchema) => ConfigBuilder<T>
+  fromObject: (object: object) => ConfigBuilder<T>
+  fromFile: (
+    filePath: string,
+    options?: { watch: boolean; args: any[] }
+  ) => ConfigBuilder<T>
+  fromEnvironment: (
+    prefix?: string,
+    options?: { watch: boolean }
+  ) => ConfigBuilder<T>
+  fromArgument: (prefix?: string) => ConfigBuilder<T>
+  get: () => T
+}
+
+/**
  * Returns the configuration loader builder
  * @param configFilePath
  */
-export default function<T extends object>() {
+export default function<T extends object>(): ConfigBuilder<T> {
   let tempConfig: object[] = []
   let state: T | undefined = undefined
   let validator: ajv.ValidateFunction | undefined = undefined
@@ -86,7 +104,7 @@ export default function<T extends object>() {
       if (!state) {
         updateState(tempConfig)
       }
-      return state
+      return state as T
     }
   }
 }

@@ -1,4 +1,4 @@
-import confima from "~/index"
+import confima from "../../src/index"
 import * as fs from "fs"
 import * as path from "path"
 

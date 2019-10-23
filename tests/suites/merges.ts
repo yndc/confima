@@ -1,4 +1,4 @@
-import confima from "~/index"
+import confima from "../../src/index"
 
 describe("config merges", () => {
   const merges = {
