@@ -3,11 +3,16 @@
   "version": "1.0.0",
   "description": "Configuration loader and validator",
   "main": "dist/index.js",
+  "types": "dist/index.d.js",
   "repository": "https://github.com/yndc/confima.git",
   "author": "yondercode",
   "license": "MIT",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc",
+    "prepare": "yarn build",
     "test": "jest"
   },
   "devDependencies": {
