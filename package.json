@@ -1,6 +1,6 @@
 {
   "name": "confima",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Configuration loader and validator",
   "main": "dist/index.js",
   "types": "dist/index.d.js",
