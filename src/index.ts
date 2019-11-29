@@ -16,7 +16,7 @@ import argumentLoader from "./loaders/arguments"
  * Interface for the config builder
  */
 export interface ConfigBuilder<T extends object> {
-  setSchema: (schema: JsonSchema) => ConfigBuilder<T>
+  setSchema: (schema: JsonSchema, options?: ajv.Options) => ConfigBuilder<T>
   fromObject: (object: object) => ConfigBuilder<T>
   fromFile: (
     filePath: string,
@@ -65,8 +65,8 @@ export default function<T extends object>(): ConfigBuilder<T> {
      * If this is set, then the final configuration will be validated against this schema.
      * On failure, exception will be thrown with the errors
      */
-    setSchema: function(schema: JsonSchema) {
-      validator = new ajv().compile(schema)
+    setSchema: function(schema: JsonSchema, options?: ajv.Options) {
+      validator = new ajv(options).compile(schema)
       return this
     },
     /**
