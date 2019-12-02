@@ -7,7 +7,6 @@
 
 import * as ajv from "ajv"
 import { deepMerge } from "./utils"
-import { JSONSchema7 as JsonSchema } from "json-schema"
 import fileLoader from "./loaders/file"
 import environmentLoader from "./loaders/environment"
 import argumentLoader from "./loaders/arguments"
@@ -16,7 +15,7 @@ import argumentLoader from "./loaders/arguments"
  * Interface for the config builder
  */
 export interface ConfigBuilder<T extends object> {
-  setSchema: (schema: JsonSchema, options?: ajv.Options) => ConfigBuilder<T>
+  setSchema: (schema: object, options?: ajv.Options) => ConfigBuilder<T>
   fromObject: (object: object) => ConfigBuilder<T>
   fromFile: (
     filePath: string,
@@ -65,7 +64,7 @@ export default function<T extends object>(): ConfigBuilder<T> {
      * If this is set, then the final configuration will be validated against this schema.
      * On failure, exception will be thrown with the errors
      */
-    setSchema: function(schema: JsonSchema, options?: ajv.Options) {
+    setSchema: function(schema: object, options?: ajv.Options) {
       validator = new ajv(options).compile(schema)
       return this
     },

@@ -17,7 +17,6 @@
   },
   "devDependencies": {
     "@types/jest": "^24.0.19",
-    "@types/json-schema": "^7.0.3",
     "@types/node": "^12.11.2",
     "jest": "^24.9.0",
     "ts-jest": "^24.1.0",

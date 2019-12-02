@@ -1,8 +1,7 @@
 import confima from "../../src/index"
-import { JSONSchema7 as JsonSchema } from "json-schema"
 
 describe("config validation", () => {
-  const schema: JsonSchema = {
+  const schema = {
     type: "object",
     properties: {
       one: {
